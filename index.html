@@ -15,11 +15,43 @@
             <div id="board"></div>
 
             <script> /* ici notre code JS*/
+                function shuffleChildren(parent){
+                    let children = parent.children
+                    let i = children.length, k ; temp
+                    while (--i > 0){
+                        k = Math.floor(Math.random() * (i+1))
+                        temp = children[k]
+                        children[k] = children[i]
+                        parent.appenChild(temp)
+                    }
+                }
+
                 const box = document.createElement("div")
                 box.classList.add("box")
 
                 const board = document.querySelector("#board")
-                board.appendChild(box)
+               /* board.appendChild(box)
+                 box.innerText = 1 */
+
+                for(let i = 1; i <= 10; i++){
+                    let newbox = box.cloneNode()
+                    newbox.innerText = i
+                    board.appendChild(newbox)
+                    newbox.add
+                }
+                let i = board.children.length, k , temp
+                while (--i > 0) { // On boucle tant que 1 oté de i est toujours positif // k stocke un nombre aléatoire basé sur i
+                    k = Math.floor (Math.random() * (i+1))
+                    //temp pointe temporairement l'élément à la positioin k dans le board
+
+                    temp = board.children[k]
+                    //remplace l'élément à la disposition k par l'élément à la position i 
+
+                    board.children[k] = board.children[i] // place l'élément k pointé temporairement à la fin du contenu de board
+                    board.appendChild(temp)
+                }
+
+             shuffleChildren(board)
             </script>
         </body>
 </html>
