@@ -12,10 +12,13 @@
     margin: 5px;
     animation: appear 1s;
     border-radius: 6px;
+    cursor : pointer;
+    transition: background-color 0.8s, color 0.8s, transform 0.8s;
 }
-.box-clicked{
+.box-valid{
 background-color: #ccc;
 color: #aaa;
+transform: scale(0.8);
 }
 
 @keyframes appear{  /* appear permettra au chargement de la place de faire apparaitre les box en tournoyant et zoomant légèrement*/

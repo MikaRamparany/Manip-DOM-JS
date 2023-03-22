@@ -1,0 +1,40 @@
+Code qui mélange aléatoirement : 
+
+  let i = board.children.length, k , temp
+                while (--i > 0) { // On boucle tant que 1 oté de i est toujours positif // k stocke un nombre aléatoire basé sur i
+                    k = Math.floor (Math.random() * (i+1))
+                    //temp pointe temporairement l'élément à la position k dans le board
+
+                    temp = board.children[k]
+                    //remplace l'élément à la disposition k par l'élément à la position i 
+
+                    board.children[k] = board.children[i] // place l'élément k pointé temporairement à la fin du contenu de board
+                    board.appendChild(temp)
+                }
+
+
+                <!-- Cette fonction est otpimisée par : 
+                function shuffleChildren(parent) {
+                    let children = parent.children
+                    let i = children.length, k, temp
+                    while (--i > 0) {
+                        k = Math.floor(Math.random() * (i+1))
+                        temp = children[k]
+                        children[k] = children[i]
+                        parent.appendChild(temp)
+                    }
+                }   -->
+
+<!--les nota bene et explications : 
+NB 1 :ATTENTION : piège, au début nous avons créé une classe box-clicked, demandé par l'énoncée, mais il faut la changer en box-valid sinon l'appel à la classe ne se fait pas.*/
+                            nb++ 
+                            
+NB 2 :Ajouter nb++ ici précédé de 'let nb=1' à la ligne 41, permet d'incrémenter la boite 1 puis de valider les boites dans l'ordre ascendant.
+
+ Explication 1:->  Si nb est égal au nombre de boites du jeu, c'est que le dernier clic était sur la denrière boite-> VICTOIRE du joueur ! (ATTENTION : il ne faut pas incrémenter nb avant)
+
+ Explication 2:-> Si le numéro de la boite est supérieur à nb, c'est que le joueur a cliqué sur une boite trop élevée -> ERREUR recommencer ! 
+
+ Explication 3:-> Sinon le joueur a cliqué sur une boite déjà grisée. On l'informe seulement de cela, /!\ le jeu ne redémarre pas, mais continue/!\.
+
+ ajout/ Explication 4:

@@ -15,16 +15,33 @@
             <div id="board"></div>
 
             <script> /* ici notre code JS*/
-                function shuffleChildren(parent){
+
+/* Fonction mélanger les cubes numérotés*/
+
+                function shuffleChildren(parent) {
                     let children = parent.children
-                    let i = children.length, k ; temp
-                    while (--i > 0){
+                    let i = children.length, k, temp
+                    while (--i > 0) {
                         k = Math.floor(Math.random() * (i+1))
                         temp = children[k]
                         children[k] = children[i]
-                        parent.appenChild(temp)
+                        parent.appendChild(temp)
                     }
                 }
+/* Fin fonction mélanger les cubes*/
+
+/* Fonction pour provoquer une réaction visuelle sur la boite lorsqu'on clique dessus*/
+                function showReaction(type,clickedBox){
+                    clickedBox.classList.add(type)
+                    if(type !== "success"){
+                        setTimeout(function(){
+                            clickedBox.classList.remove(type)
+                            },800)
+                        }
+                    }
+    /* Fin fonction show reaction sur la boite*/ 
+
+/* Fonction afficher les cubes numérotés de 1 à 10 */
 
                 const box = document.createElement("div")
                 box.classList.add("box")
@@ -33,25 +50,44 @@
                /* board.appendChild(box)
                  box.innerText = 1 */
 
+
+
+                let nb=1 /* NB2 */
+
                 for(let i = 1; i <= 10; i++){
-                    let newbox = box.cloneNode()
+                    const newbox = box.cloneNode()
                     newbox.innerText = i
                     board.appendChild(newbox)
-                    newbox.add
+
+                    newbox.addEventListener ("click", function(){
+                        console.log("Boite n°"+ i +", click !")
+
+
+                        if(i == nb){
+                            newbox.classList.add("box-valid") /* NB 1 */
+
+                            if(nb == board.children.length){ /* Explication 1:*/
+                                alert("VICTOIRE !")
+                            }
+                            nb++ /*  NB2 */ 
+                        }
+                        else if(i> nb){ /* Explication 2:*/
+                            alert ("Erreur, recommencez !")
+                            nb = 1
+
+                            board.querySelectorAll(".box-valid").forEach(function(validBox){ /* ajout/ Explication 4:*/
+                                validBox.classList.remove("box-valid")
+                            })
+                        }
+                        else { /* Explication 3:*/
+                            alert ("Case déjà validée !")
+                        }
+                    
+                    })
+                    
                 }
-                let i = board.children.length, k , temp
-                while (--i > 0) { // On boucle tant que 1 oté de i est toujours positif // k stocke un nombre aléatoire basé sur i
-                    k = Math.floor (Math.random() * (i+1))
-                    //temp pointe temporairement l'élément à la positioin k dans le board
-
-                    temp = board.children[k]
-                    //remplace l'élément à la disposition k par l'élément à la position i 
-
-                    board.children[k] = board.children[i] // place l'élément k pointé temporairement à la fin du contenu de board
-                    board.appendChild(temp)
-                }
-
              shuffleChildren(board)
+
             </script>
         </body>
 </html>
