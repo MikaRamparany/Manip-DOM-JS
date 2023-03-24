@@ -8,13 +8,45 @@
 
 
 
-    <title>Document</title>
+    <title>Jeu JS Guidé </title>
     </head>
         <body>
-
+        <div class="Headpart"> 
+            <h1>Count on me</h1>
+       
             <div id="board"></div>
+        </div>
+        <div id="Timer"><time>00:00:00</time></div>
 
+        
             <script> /* ici notre code JS*/
+/* variables : */ 
+
+var startTimer = null;
+
+/* Fonction stopTimer*/
+
+function stopTimer() {
+    const endTimer = Date.now();
+    const elapsed = new Date(endTimer - startTimer);
+    const hours = elapsed.getUTCHours().toString().padStart(2, '0');
+    const minutes = elapsed.getUTCMinutes().toString().padStart(2, '0');
+    const seconds = elapsed.getUTCSeconds().toString().padStart(2, '0');
+    const formattedTime = `${hours}:${minutes}:${seconds}`;
+    document.querySelector('#Timer time').textContent = formattedTime;
+}
+
+/* Fonction showTimer*/ 
+function showTimer() {
+    var timerElement = document.getElementById("Timer").querySelector("time");
+    setInterval(function() {
+      var elapsedTime = Date.now() - startTimer;
+      var minutes = Math.floor((elapsedTime / (1000 * 60)) % 60);
+      var seconds = Math.floor((elapsedTime / 1000) % 60);
+      var milliseconds = elapsedTime % 1000;
+      timerElement.innerHTML = ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2) + ":" + ("0" + Math.floor(milliseconds / 10)).slice(-2);
+    }, 10);
+  }
 
 /* Fonction mélanger les cubes numérotés*/
 
@@ -31,7 +63,7 @@
 /* Fin fonction mélanger les cubes*/
 
 /* Fonction pour provoquer une réaction visuelle sur la boite lorsqu'on clique dessus*/
-                function showReaction(type,clickedBox){
+                function showReaction(type, clickedBox){
                     clickedBox.classList.add(type)
                     if(type !== "success"){
                         setTimeout(function(){
@@ -64,23 +96,29 @@
 
 
                         if(i == nb){
+                            startTimer = (nb == 1) ? Date.now() : startTimer
+                            showTimerInterval = showTimer();
                             newbox.classList.add("box-valid") /* NB 1 */
-
+                            shuffleChildren(board)// Pour mélanger les box à chaque clic sur box
                             if(nb == board.children.length){ /* Explication 1:*/
-                                alert("VICTOIRE !")
+                                board.querySelectorAll(".box").forEach(function(box){
+                                    showReaction("success",box) 
+                                })
+                                stopTimer()//Arrête le timer une fois que les boxs sont toutes validées
                             }
                             nb++ /*  NB2 */ 
                         }
                         else if(i> nb){ /* Explication 2:*/
-                            alert ("Erreur, recommencez !")
+                            showReaction("error",newbox)
                             nb = 1
 
                             board.querySelectorAll(".box-valid").forEach(function(validBox){ /* ajout/ Explication 4:*/
                                 validBox.classList.remove("box-valid")
+                                shuffleChildren(board) 
                             })
                         }
                         else { /* Explication 3:*/
-                            alert ("Case déjà validée !")
+                            showReaction("notice",newbox)
                         }
                     
                     })
@@ -88,6 +126,11 @@
                 }
              shuffleChildren(board)
 
+
+             var nbBox=prompt("Saisissez le chiffre de départ");
+             var gamer=prompt("entrer votre nom");
+     
+             var scores = new Array();
             </script>
         </body>
 </html>
