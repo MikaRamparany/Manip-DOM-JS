@@ -34,7 +34,7 @@ function stopTimer() {
     const seconds = elapsed.getUTCSeconds().toString().padStart(2, '0');
     const formattedTime = `${hours}:${minutes}:${seconds}`;
     document.querySelector('#Timer time').textContent = formattedTime;
-}
+}/*
 
 /* Fonction showTimer*/ 
 function showTimer() {
@@ -97,14 +97,17 @@ function showTimer() {
 
                         if(i == nb){
                             startTimer = (nb == 1) ? Date.now() : startTimer
-                            showTimerInterval = showTimer();
+                           // showTimerInterval = showTimer() <-- showTimerInterval pose problème et bloque l'action de stopTimer()..
                             newbox.classList.add("box-valid") /* NB 1 */
                             shuffleChildren(board)// Pour mélanger les box à chaque clic sur box
                             if(nb == board.children.length){ /* Explication 1:*/
                                 board.querySelectorAll(".box").forEach(function(box){
                                     showReaction("success",box) 
                                 })
+                                //console.log("finish")
+                            
                                 stopTimer()//Arrête le timer une fois que les boxs sont toutes validées
+                                
                             }
                             nb++ /*  NB2 */ 
                         }
